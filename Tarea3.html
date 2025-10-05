@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Registro de Clientes</title>
+  <style>
+    :root{
+      --accent: #00e6a8;
+      --soft: #6b1515;
+      --glass: rgba(255,255,255,0.03);
+      --muted: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    html,body{height:100%;margin:0}
+    body{
+      background:linear-gradient(180deg,#000 0%, #450d0d 100%);
+      color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      padding:24px;
+    }
+    .card{
+      width:100%;max-width:980px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.04);border-radius:12px;padding:20px;box-shadow:0 6px 30px rgba(0,0,0,0.6);
+    }
+    h1{margin:0 0 12px 0;font-size:20px}
+    p.lead{margin:0 0 16px 0;color:var(--muted)}
+
+    .layout{display:grid;grid-template-columns:1fr 420px;gap:18px}
+    @media (max-width:880px){.layout{grid-template-columns:1fr}}
+
+    form{background:var(--glass);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+    .row{display:flex;gap:10px;margin-bottom:10px}
+    .col{flex:1;display:flex;flex-direction:column}
+    label{font-size:12px;margin-bottom:6px;color:var(--muted)}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:#fff;outline:none}
+    input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(0,230,168,0.06)}
+    textarea{min-height:80px;resize:vertical}
+
+    .actions{display:flex;gap:8px;margin-top:8px}
+    .btn{padding:9px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:#04261d}
+    .btn-muted{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    .small{font-size:13px;padding:6px 8px}
+
+    .table-wrap{background:transparent;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);max-height:520px;overflow:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:8px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    th{position:sticky;top:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px)}
+    .muted{color:var(--muted);font-size:13px}
+
+    .pill{display:inline-block;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600}
+
+    .msg{padding:8px;border-radius:8px;margin-bottom:8px}
+    .msg.success{background:rgba(0,230,168,0.12);color:var(--accent)}
+    .msg.error{background:rgba(255,80,80,0.08);color:#ff7b7b}
+
+    .controls{display:flex;gap:8px;margin-bottom:10px}
+    .search{flex:1}
+
+    footer{margin-top:12px;color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>
+        <h1>Registro de Clientes</h1>
+        <p class="lead">Formulario para ingresar datos de clientes. <span class="pill">localStorage</span></p>
+      </div>
+      <div class="pill">Tema: Rojo</div>
+    </div>
+
+    <div class="layout" style="margin-top:14px">
+      <div>
+        <form id="formCliente" autocomplete="off">
+          <div id="msg"></div>
+
+          <div class="row">
+            <div class="col">
+              <label for="cedula">Cédula / ID</label>
+              <input id="cedula" name="cedula" inputmode="numeric" pattern="[0-9]+" placeholder="Ej: 1723456789" required />
+            </div>
+            <div class="col">
+              <label for="telefono">Teléfono</label>
+              <input id="telefono" name="telefono" inputmode="tel" placeholder="0991234567" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="apellido">Apellido</label>
+              <input id="apellido" name="apellido" placeholder="Apellido" required />
+            </div>
+            <div class="col">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" placeholder="Nombre" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="correo">Correo electrónico</label>
+              <input id="correo" name="correo" type="email" placeholder="nombre@ejemplo.com" required />
+            </div>
+            <div class="col">
+              <label for="direccion">Dirección</label>
+              <input id="direccion" name="direccion" placeholder="Calle, ciudad, país" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Guardar cliente</button>
+            <button class="btn btn-muted" type="button" id="btnLimpiar">Limpiar</button>
+            <button class="btn small btn-muted" type="button" id="btnExport">Exportar CSV</button>
+          </div>
+        </form>
+      </div>
+
+      <div>
+        <div class="controls">
+          <input class="search" id="q" placeholder="Buscar por cédula, nombre o apellido" />
+          <button class="btn small btn-muted" id="btnClearFilter">Limpiar</button>
+        </div>
+
+        <div class="table-wrap">
+          <table id="tabla">
+            <thead>
+              <tr>
+                <th>Cédula</th>
+                <th>Apellido</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <footer>
+          <div id="conteo" class="muted">0 clientes registrados</div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Manejo de clientes en localStorage
+    const STORAGE_KEY = 'clientes_registro_v1';
+
+    function readStorage(){
+      try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }catch(e){return []}
+    }
+    function writeStorage(list){ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+
+    const form = document.getElementById('formCliente');
+    const tablaBody = document.querySelector('#tabla tbody');
+    const msgBox = document.getElementById('msg');
+    const conteo = document.getElementById('conteo');
+
+    function mostrarMensaje(text, type='success'){
+      msgBox.innerHTML = `<div class="msg ${type}">${text}</div>`;
+      setTimeout(()=>{ msgBox.innerHTML = '' }, 3000);
+    }
+
+    function validarEmail(email){
+      // validación
+      return /\S+@\S+\.\S+/.test(email);
+    }
+
+    function renderTabla(filter=''){
+      const list = readStorage();
+      const filtrada = list.filter(c=>{
+        if(!filter) return true;
+        const f = filter.toLowerCase();
+        return (c.cedula||'').toLowerCase().includes(f) || (c.nombre||'').toLowerCase().includes(f) || (c.apellido||'').toLowerCase().includes(f);
+      });
+      tablaBody.innerHTML = '';
+      filtrada.forEach((c, idx)=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${escapeHtml(c.cedula||'')}</td>
+          <td>${escapeHtml(c.apellido||'')}</td>
+          <td>${escapeHtml(c.nombre||'')}</td>
+          <td>${escapeHtml(c.direccion||'')}</td>
+          <td>${escapeHtml(c.correo||'')}</td>
+          <td>${escapeHtml(c.telefono||'')}</td>
+          <td>
+            <button class="btn small btn-muted" data-action="edit" data-idx="${idx}">Editar</button>
+            <button class="btn small btn-muted" data-action="delete" data-idx="${idx}">Eliminar</button>
+          </td>
+        `;
+        tablaBody.appendChild(tr);
+      });
+      conteo.textContent = `${list.length} clientes registrados`;
+    }
+
+    function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      for(let k in data) data[k] = data[k].trim();
+
+      // Validaciones básicas
+      if(!data.cedula){ mostrarMensaje('La cédula es obligatoria', 'error'); return }
+      if(!data.apellido){ mostrarMensaje('El apellido es obligatorio', 'error'); return }
+      if(!data.nombre){ mostrarMensaje('El nombre es obligatorio', 'error'); return }
+      if(!validarEmail(data.correo)){ mostrarMensaje('Correo inválido', 'error'); return }
+
+      const list = readStorage();
+      // Si existe el mismo ID, actualizar; si no, agregar
+      const idxExist = list.findIndex(x=>x.cedula === data.cedula);
+      if(idxExist >= 0){
+        list[idxExist] = data;
+        mostrarMensaje('Cliente actualizado correctamente');
+      }else{
+        list.push(data);
+        mostrarMensaje('Cliente agregado correctamente');
+      }
+      writeStorage(list);
+      renderTabla(document.getElementById('q').value);
+      form.reset();
+    });
+
+    document.getElementById('btnLimpiar').addEventListener('click', ()=>{ form.reset(); });
+
+    // Delegación para botones editar / eliminar
+    tablaBody.addEventListener('click', (e)=>{
+      const btn = e.target.closest('button'); if(!btn) return;
+      const action = btn.dataset.action; const idx = Number(btn.dataset.idx);
+      const list = readStorage();
+      if(action === 'delete'){
+        if(!confirm('¿Eliminar este cliente?')) return;
+        list.splice(idx,1);
+        writeStorage(list);
+        renderTabla(document.getElementById('q').value);
+        mostrarMensaje('Cliente eliminado');
+      }
+      if(action === 'edit'){
+        const c = list[idx];
+        if(!c) return;
+        // Rellenar formulario
+        form.cedula.value = c.cedula || '';
+        form.apellido.value = c.apellido || '';
+        form.nombre.value = c.nombre || '';
+        form.direccion.value = c.direccion || '';
+        form.correo.value = c.correo || '';
+        form.telefono.value = c.telefono || '';
+        // Focus
+        form.nombre.focus();
+      }
+    });
+
+    // Buscador
+    const q = document.getElementById('q');
+    q.addEventListener('input', ()=> renderTabla(q.value));
+    document.getElementById('btnClearFilter').addEventListener('click', ()=>{ q.value = ''; renderTabla(''); });
+
+    // Export CSV simple
+    document.getElementById('btnExport').addEventListener('click', ()=>{
+      const list = readStorage();
+      if(!list.length){ alert('No hay datos para exportar'); return }
+      const headers = ['cedula','apellido','nombre','direccion','correo','telefono'];
+      const rows = [headers.join(',')].concat(list.map(r=> headers.map(h=> '"'+((r[h]||'').replace(/"/g,'""'))+'"').join(',')));
+      const csv = rows.join('\n');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'clientes.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // Inicializar
+    renderTabla();
+  </script>
+</body>
+</html>
