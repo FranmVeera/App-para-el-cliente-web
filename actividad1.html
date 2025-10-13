@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operaciones con Bucle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+            text-align: center;
+            margin-top: 60px;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            width: 100px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background-color: #0078d7;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+        .resultado {
+            margin-top: 20px;
+            background-color: #333;
+            display: inline-block;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Operaciones con Bucle</h1>
+    <p>Ingrese dos números:</p>
+
+    <input type="number" id="num1" placeholder="Número 1">
+    <input type="number" id="num2" placeholder="Número 2">
+    <br>
+    <button onclick="calcular()">Calcular</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+        function calcular() {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+            const resultadoDiv = document.getElementById("resultado");
+
+            if (isNaN(num1) || isNaN(num2)) {
+                resultadoDiv.innerHTML = "<p> Por favor ingrese ambos números.</p>";
+                return;
+            }
+
+            let resultados = "";
+            for (let i = 1; i <= 5; i++) {
+                switch (i) {
+                    case 1:
+                        resultados += `1️. Suma: ${num1 + num2}<br>`;
+                        break;
+                    case 2:
+                        resultados += `2️. Resta: ${num1 - num2}<br>`;
+                        break;
+                    case 3:
+                        resultados += `3️. Multiplicación: ${num1 * num2}<br>`;
+                        break;
+                    case 4:
+                        resultados += `4️. División: ${num2 !== 0 ? (num1 / num2).toFixed(2) : "Error (división por 0)"}<br>`;
+                        break;
+                    case 5:
+                        resultados += `5️. Módulo: ${num2 !== 0 ? num1 % num2 : "Error (mod por 0)"}<br>`;
+                        break;
+                }
+            }
+
+            resultadoDiv.innerHTML = resultados;
+        }
+    </script>
+</body>
+</html>
