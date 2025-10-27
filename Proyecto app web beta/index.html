@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">   <!-- 👈 agregado -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Sistema de gestión de ingreso vehicular - ULEAM"/>
+  <title>Sistema Vehicular - ULEAM</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <!-- 👇 Botón hamburguesa (móvil) -->
+  <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="logo">
+      <img src="assets/LOGO-ULEAM.png" alt="Logo ULEAM" class="logo-img">
+      <span>ULEAM Vehicular</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" onclick="cargarInterfaz('panel.html')"><i class="fas fa-home"></i> Inicio</a></li>
+        <li><a href="#" onclick="cargarInterfaz('registro-usuario-vehiculo.html')"><i class="fas fa-user-plus"></i> Registrar Usuario y Vehículo</a></li>
+        <li><a href="#" onclick="cargarInterfaz('control-ingreso-salida.html')"><i class="fas fa-door-open"></i> Ingresos/Salidas</a></li>
+        <li><a href="#" onclick="cargarInterfaz('consulta-movimientos.html')"><i class="fas fa-history"></i> Consultas</a></li>
+        <li><a href="#" onclick="cargarInterfaz('gestion-usuarios.html')"><i class="fas fa-users-cog"></i> Gestión Usuarios</a></li>
+        <li><a href="#" onclick="cerrarSesion()" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="main-content"></main>
+
+  <script src="js/app.js"></script>
+  <!-- 👇 Script extra para toggle menú móvil -->
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    toggle?.addEventListener('click', () => {
+      sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+    });
+  </script>
+</body>
+</html>

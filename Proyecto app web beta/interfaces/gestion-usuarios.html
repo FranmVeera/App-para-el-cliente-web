@@ -1,0 +1,71 @@
+<div class="container">
+  <h2>Gestión de Usuarios del Sistema</h2>
+  <div class="form-grid">
+    <div class="form-group">
+      <label>Nombre completo <span style="color:#e74c3c;">*</span></label>
+      <input type="text" id="nombreCompleto" required>
+      <div id="error-nombre" class="error-message"></div>
+    </div>
+    <div class="form-group">
+      <label>Correo <span style="color:#e74c3c;">*</span></label>
+      <input type="email" id="correoAdmin" required>
+      <div id="error-correo" class="error-message"></div>
+    </div>
+    <div class="form-group">
+      <label>Rol <span style="color:#e74c3c;">*</span></label>
+      <select id="rolAdmin" required>
+        <option value="">-- Seleccionar --</option>
+        <option value="admin">Administrador</option>
+        <option value="guardia">Guardia</option>
+      </select>
+      <div id="error-rol" class="error-message"></div>
+    </div>
+    <div class="form-group">
+      <label>Contraseña <span style="color:#e74c3c;">*</span></label>
+      <input type="password" id="contrasenaAdmin" minlength="6" required>
+      <div id="error-contrasena" class="error-message"></div>
+    </div>
+    <button class="btn" type="button" onclick="crearUsuarioSistema()">Crear Usuario</button>
+  </div>
+</div>
+
+<style>
+.error-message { color: #e74c3c; font-size: 0.85rem; margin-top: 5px; }
+</style>
+
+<script>
+function validarCorreo(correo) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+}
+
+function crearUsuarioSistema() {
+  const nombre = document.getElementById('nombreCompleto').value.trim();
+  const correo = document.getElementById('correoAdmin').value.trim();
+  const rol = document.getElementById('rolAdmin').value;
+  const pass = document.getElementById('contrasenaAdmin').value;
+
+  let valido = true;
+  document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+  if (!nombre) { document.getElementById('error-nombre').textContent = '⚠️ Obligatorio.'; valido = false; }
+  if (!correo) {
+    document.getElementById('error-correo').textContent = '⚠️ Obligatorio.';
+    valido = false;
+  } else if (!validarCorreo(correo)) {
+    document.getElementById('error-correo').textContent = '⚠️ Formato inválido.';
+    valido = false;
+  }
+  if (!rol) { document.getElementById('error-rol').textContent = '⚠️ Seleccione un rol.'; valido = false; }
+  if (!pass) {
+    document.getElementById('error-contrasena').textContent = '⚠️ Obligatorio (mín. 6 caracteres).';
+    valido = false;
+  } else if (pass.length < 6) {
+    document.getElementById('error-contrasena').textContent = '⚠️ Mínimo 6 caracteres.';
+    valido = false;
+  }
+
+  if (valido) {
+    alert(`✅ Usuario ${nombre} creado como ${rol}.`);
+  }
+}
+</script>

@@ -1,0 +1,57 @@
+<div class="container">
+  <h2>Consulta de Movimientos</h2>
+  <div class="form-grid full">
+    <div class="form-group">
+      <label>Fecha inicial</label>
+      <input type="date" id="fechaInicio" required>
+      <div id="error-fecha-inicio" class="error-message"></div>
+    </div>
+    <div class="form-group">
+      <label>Fecha final</label>
+      <input type="date" id="fechaFin" required>
+      <div id="error-fecha-fin" class="error-message"></div>
+    </div>
+    <div class="form-group">
+      <label>Buscar por placa o cédula (opcional)</label>
+      <input type="text" id="filtro">
+    </div>
+    <button class="btn" type="button" onclick="buscarMovimientos()">Buscar</button>
+  </div>
+
+  <!-- Tabla (sin cambios) -->
+  <div class="table-container">
+    <table>...</table>
+  </div>
+</div>
+
+<style>
+.error-message { color: #e74c3c; font-size: 0.85rem; margin-top: 5px; }
+</style>
+
+<script>
+function buscarMovimientos() {
+  const inicio = document.getElementById('fechaInicio').value;
+  const fin = document.getElementById('fechaFin').value;
+  let valido = true;
+
+  document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+  if (!inicio) {
+    document.getElementById('error-fecha-inicio').textContent = '⚠️ Obligatorio.';
+    valido = false;
+  }
+  if (!fin) {
+    document.getElementById('error-fecha-fin').textContent = '⚠️ Obligatorio.';
+    valido = false;
+  }
+  if (inicio && fin && new Date(inicio) > new Date(fin)) {
+    document.getElementById('error-fecha-fin').textContent = '⚠️ La fecha final no puede ser menor.';
+    valido = false;
+  }
+
+  if (valido) {
+    alert('✅ Consulta realizada con éxito.');
+    // Aquí iría la lógica real
+  }
+}
+</script>

@@ -1,0 +1,206 @@
+<div class="container">
+  <h2>Registrar Usuario y Vehículo</h2>
+
+  <!-- Sección: Usuario existente -->
+  <div class="form-section">
+    <h3><i class="fas fa-users"></i> ¿Ya existe el conductor?</h3>
+    <div class="form-group">
+      <label for="usuarioExistente">Seleccionar conductor registrado</label>
+      <select id="usuarioExistente" aria-describedby="error-usuario-existente">
+        <option value="">-- Seleccione un conductor --</option>
+        <option value="1">Joel Barrera (0987654321)</option>
+        <option value="2">Patricia Quiroz (0912345678)</option>
+      </select>
+      <div id="error-usuario-existente" class="error-message" role="alert"></div>
+    </div>
+    <button class="btn btn-block" type="button" onclick="registrarVehiculoExistente()">
+      Registrar Vehículo para este conductor
+    </button>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- Sección: Nuevo usuario -->
+  <div class="form-section">
+    <h3><i class="fas fa-user-plus"></i> Registrar nuevo conductor</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="cedulaNuevo">Cédula <span>*</span></label>
+        <input type="text" id="cedulaNuevo" placeholder="Ej: 1309876543" aria-describedby="error-cedula">
+        <div id="error-cedula" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="nombreNuevo">Nombre <span>*</span></label>
+        <input type="text" id="nombreNuevo" aria-describedby="error-nombre">
+        <div id="error-nombre" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="apellidoNuevo">Apellido <span>*</span></label>
+        <input type="text" id="apellidoNuevo" aria-describedby="error-apellido">
+        <div id="error-apellido" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="correoNuevo">Correo <span>*</span></label>
+        <input type="email" id="correoNuevo" aria-describedby="error-correo">
+        <div id="error-correo" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefonoNuevo">Teléfono</label>
+        <input type="tel" id="telefonoNuevo" placeholder="Ej: 0991234567" aria-describedby="error-telefono">
+        <div id="error-telefono" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="rolNuevo">Rol <span>*</span></label>
+        <select id="rolNuevo" aria-describedby="error-rol">
+          <option value="">-- Seleccionar --</option>
+          <option value="estudiante">Estudiante</option>
+          <option value="docente">Docente</option>
+          <option value="administrativo">Administrativo</option>
+        </select>
+        <div id="error-rol" class="error-message" role="alert"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección: Vehículo -->
+  <div class="form-section">
+    <h3><i class="fas fa-car"></i> Datos del Vehículo</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="placaVehiculo">Placa <span>*</span></label>
+        <input type="text" id="placaVehiculo" placeholder="Ej: ABC123" aria-describedby="error-placa">
+        <div id="error-placa" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="marcaVehiculo">Marca <span>*</span></label>
+        <input type="text" id="marcaVehiculo" aria-describedby="error-marca">
+        <div id="error-marca" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="modeloVehiculo">Modelo <span>*</span></label>
+        <input type="text" id="modeloVehiculo" aria-describedby="error-modelo">
+        <div id="error-modelo" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="colorVehiculo">Color <span>*</span></label>
+        <input type="text" id="colorVehiculo" aria-describedby="error-color">
+        <div id="error-color" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="tipoVehiculo">Tipo <span>*</span></label>
+        <select id="tipoVehiculo" aria-describedby="error-tipo">
+          <option value="">-- Seleccionar --</option>
+          <option value="auto">Auto</option>
+          <option value="moto">Moto</option>
+          <option value="camioneta">Camioneta</option>
+          <option value="otro">Otro</option>
+        </select>
+        <div id="error-tipo" class="error-message" role="alert"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón principal con validación-resumen -->
+  <button class="btn" type="button" onclick="validarYRegistrar()" style="width:100%; margin-top:20px;">
+    Registrar Nuevo Conductor y Vehículo
+  </button>
+
+  <!-- Mensaje resumen (oculto por defecto) -->
+  <div id="mensaje-resumen" class="resumen-error" role="alert"></div>
+</div>
+
+<style>
+.error-message   { color: #e74c3c; font-size: 0.85rem; margin-top: 5px; min-height: 18px; }
+.separator       { border-top: 1px solid var(--borde-suave); margin: 30px 0; }
+.resumen-error   { color: #e74c3c; font-weight: 600; margin-top: 15px; text-align: center; }
+span[aria-hidden="true"] { color: #e74c3c; }
+</style>
+
+<script>
+/* ---------- VALIDACIONES ---------- */
+function validarCedula(cedula) {
+  if (!cedula || cedula.length !== 10 || isNaN(cedula)) return false;
+  const d = cedula.split('').map(Number);
+  const prov = d[0] * 10 + d[1];
+  if (prov < 1 || prov > 24) return false;
+  const coef = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    let v = d[i] * coef[i];
+    if (v >= 10) v -= 9;
+    sum += v;
+  }
+  const verif = (10 - (sum % 10)) % 10;
+  return verif === d[9];
+}
+function validarCorreo(c) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c); }
+function validarPlaca(p) {
+  const pl = p.trim().toUpperCase();
+  return /^[A-Z]{3}\d{3,4}$/.test(pl) || /^\d{3}[A-Z]{3}$/.test(pl);
+}
+function limpiarErrores() {
+  document.querySelectorAll('.error-message').forEach(e => e.textContent = '');
+  document.getElementById('mensaje-resumen').textContent = '';
+}
+
+/* ---------- USUARIO EXISTENTE ---------- */
+function registrarVehiculoExistente() {
+  limpiarErrores();
+  const usuario = document.getElementById('usuarioExistente').value;
+  const placa   = document.getElementById('placaVehiculo').value.trim();
+
+  if (!usuario) { document.getElementById('error-usuario-existente').textContent = '⚠️ Seleccione un conductor.'; return; }
+  if (!placa)   { document.getElementById('error-placa').textContent = '⚠️ Este campo es obligatorio.'; return; }
+  if (!validarPlaca(placa)) { document.getElementById('error-placa').textContent = '⚠️ Formato de placa inválido (Ej: ABC123).'; return; }
+
+  alert(`✅ Vehículo ${placa.toUpperCase()} registrado para el conductor seleccionado.`);
+}
+
+/* ---------- VALIDACIÓN RESUMEN ANTES DE REGISTRAR ---------- */
+function validarYRegistrar() {
+  limpiarErrores();
+
+  // Datos
+  const cedula   = document.getElementById('cedulaNuevo').value.trim();
+  const nombre   = document.getElementById('nombreNuevo').value.trim();
+  const apellido = document.getElementById('apellidoNuevo').value.trim();
+  const correo   = document.getElementById('correoNuevo').value.trim();
+  const telefono = document.getElementById('telefonoNuevo').value.trim();
+  const rol      = document.getElementById('rolNuevo').value;
+  const placa    = document.getElementById('placaVehiculo').value.trim();
+  const marca    = document.getElementById('marcaVehiculo').value.trim();
+  const modelo   = document.getElementById('modeloVehiculo').value.trim();
+  const color    = document.getElementById('colorVehiculo').value.trim();
+  const tipo     = document.getElementById('tipoVehiculo').value;
+
+  const faltantes = [];
+  if (!cedula || !validarCedula(cedula))   faltantes.push('Cédula válida');
+  if (!nombre)                             faltantes.push('Nombre');
+  if (!apellido)                           faltantes.push('Apellido');
+  if (!correo || !validarCorreo(correo))   faltantes.push('Correo válido');
+  if (telefono && !/^09\d{8}$/.test(telefono)) faltantes.push('Teléfono 09xxxxxxxx');
+  if (!rol)                                faltantes.push('Rol');
+  if (!placa || !validarPlaca(placa))      faltantes.push('Placa válida');
+  if (!marca)                              faltantes.push('Marca');
+  if (!modelo)                             faltantes.push('Modelo');
+  if (!color)                              faltantes.push('Color');
+  if (!tipo)                               faltantes.push('Tipo');
+
+  if (faltantes.length) {
+    document.getElementById('mensaje-resumen').textContent =
+      '⚠️ Complete los siguientes campos antes de continuar: ' + faltantes.join(', ');
+    return;
+  }
+
+  alert(`✅ Conductor ${nombre} ${apellido} y su vehículo ${placa.toUpperCase()} registrados con éxito.`);
+}
+</script>

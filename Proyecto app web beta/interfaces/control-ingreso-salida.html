@@ -1,0 +1,149 @@
+<div class="container">
+  <h2>Control de Ingreso y Salida</h2>
+
+  <div class="search-box">
+    <label for="placaBusqueda">Buscar por placa</label>
+    <input type="text" id="placaBusqueda" placeholder="Ej: ABC123" />
+    <button class="btn-search" onclick="buscarVehiculo()">Buscar</button>
+    <div id="error-placa-busqueda" class="error-message"></div>
+  </div>
+
+  <div id="datosVehiculo" class="vehicle-card" style="display:none;">
+    <div class="card-header">
+      <strong>Conductor:</strong> <span id="nombreConductor">-</span><br>
+      <strong>Último ingreso:</strong> <span id="ultimoIngreso">-</span>
+    </div>
+    <div class="card-actions">
+      <button class="btn-ingreso" onclick="registrarIngreso()">Registrar Ingreso</button>
+      <button class="btn-salida" onclick="registrarSalida()">Registrar Salida</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: var(--radio);
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--borde-suave);
+  }
+  .container h2 {
+    text-align: center;
+    color: var(--rojo-acento);
+    margin-bottom: 25px;
+  }
+  .search-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .search-box label {
+    font-weight: 600;
+    color: var(--texto-principal);
+  }
+  .search-box input {
+    padding: 12px;
+    border: 1px solid var(--borde-suave);
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  .btn-search {
+    width: fit-content;
+    padding: 10px 20px;
+    background: var(--rojo-acento);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+  }
+  .vehicle-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  .btn-ingreso {
+    padding: 10px 20px;
+    background: var(--verde-acento);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn-salida {
+    padding: 10px 20px;
+    background: var(--rojo-acento);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  function validarPlaca(placa) {
+    if (!placa || placa.trim() === '') return false;
+    const p = placa.trim().toUpperCase();
+    const re1 = /^[A-Z]{3}\d{3,4}$/;   // ABC123, ABC1234
+    const re2 = /^\d{3}[A-Z]{3}$/;     // 123ABC
+    return re1.test(p) || re2.test(p);
+  }
+
+  function buscarVehiculo() {
+    const inputPlaca = document.getElementById('placaBusqueda');
+    const errorDiv = document.getElementById('error-placa-busqueda');
+    const datosDiv = document.getElementById('datosVehiculo');
+
+    // Limpiar estado previo
+    errorDiv.textContent = '';
+    datosDiv.style.display = 'none';
+
+    const placa = inputPlaca.value.trim();
+
+    // Validar: ¿está vacío?
+    if (placa === '') {
+      errorDiv.textContent = '⚠️ Por favor ingrese una placa.';
+      return;
+    }
+
+    // Validar: ¿es una placa válida?
+    if (!validarPlaca(placa)) {
+      errorDiv.textContent = '⚠️ Formato de placa inválido. Use: ABC123, ABC1234 o 123ABC.';
+      return;
+    }
+
+    // ✅ SOLO si pasa ambas validaciones, mostramos los datos
+    document.getElementById('nombreConductor').textContent = 'Joel Barrera';
+    document.getElementById('ultimoIngreso').textContent = '23/10/2025 07:30';
+    datosDiv.style.display = 'block';
+  }
+
+  function registrarIngreso() {
+    const placa = document.getElementById('placaBusqueda').value.trim();
+    alert(`✅ Ingreso registrado para la placa ${placa.toUpperCase()}.`);
+  }
+
+  function registrarSalida() {
+    const placa = document.getElementById('placaBusqueda').value.trim();
+    alert(`✅ Salida registrada para la placa ${placa.toUpperCase()}.`);
+  }
+</script>
