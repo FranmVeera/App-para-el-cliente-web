@@ -1,0 +1,21 @@
+<div class="container">
+  <h2>Control de Ingreso y Salida</h2>
+
+  <div class="search-box">
+    <label for="placaBusqueda">Buscar por placa</label>
+    <input type="text" id="placaBusqueda" placeholder="Ej: ABC123" />
+    <button class="btn-search" onclick="buscarVehiculo()">Buscar</button>
+    <div id="error-placa-busqueda" class="error-message"></div>
+  </div>
+
+  <div id="datosVehiculo" class="vehicle-card" style="display:none;">
+    <div class="card-header">
+      <strong>Conductor:</strong> <span id="nombreConductor">-</span><br>
+      <strong>Último ingreso:</strong> <span id="ultimoIngreso">-</span>
+    </div>
+    <div class="card-actions">
+      <button class="btn-ingreso" onclick="registrarIngreso()">Registrar Ingreso</button>
+      <button class="btn-salida" onclick="registrarSalida()">Registrar Salida</button>
+    </div>
+  </div>
+</div>

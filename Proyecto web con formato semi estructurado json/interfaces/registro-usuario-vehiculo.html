@@ -1,0 +1,112 @@
+<div class="container">
+  <h2>Registrar Usuario y Vehículo</h2>
+
+  <div class="form-section">
+    <h3><i class="fas fa-users"></i> ¿Ya existe el conductor?</h3>
+    <div class="form-group">
+      <label for="usuarioExistente">Seleccionar conductor registrado</label>
+      <select id="usuarioExistente" aria-describedby="error-usuario-existente">
+        <option value="">-- Seleccione un conductor --</option>
+      </select>
+      <div id="error-usuario-existente" class="error-message" role="alert"></div>
+    </div>
+    <button class="btn btn-block" type="button" onclick="registrarVehiculoExistente()">
+      Registrar Vehículo para este conductor
+    </button>
+  </div>
+
+  <div class="separator"></div>
+
+  <div class="form-section">
+    <h3><i class="fas fa-user-plus"></i> Registrar nuevo conductor</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="cedulaNuevo">Cédula <span>*</span></label>
+        <input type="text" id="cedulaNuevo" placeholder="Ej: 1309876543" aria-describedby="error-cedula">
+        <div id="error-cedula" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="nombreNuevo">Nombre <span>*</span></label>
+        <input type="text" id="nombreNuevo" aria-describedby="error-nombre">
+        <div id="error-nombre" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="apellidoNuevo">Apellido <span>*</span></label>
+        <input type="text" id="apellidoNuevo" aria-describedby="error-apellido">
+        <div id="error-apellido" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="correoNuevo">Correo <span>*</span></label>
+        <input type="email" id="correoNuevo" aria-describedby="error-correo">
+        <div id="error-correo" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefonoNuevo">Teléfono</label>
+        <input type="tel" id="telefonoNuevo" placeholder="Ej: 0991234567" aria-describedby="error-telefono">
+        <div id="error-telefono" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="rolNuevo">Rol <span>*</span></label>
+        <select id="rolNuevo" aria-describedby="error-rol">
+          <option value="">-- Seleccionar --</option>
+          <option value="estudiante">Estudiante</option>
+          <option value="docente">Docente</option>
+          <option value="administrativo">Administrativo</option>
+        </select>
+        <div id="error-rol" class="error-message" role="alert"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3><i class="fas fa-car"></i> Datos del Vehículo</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="placaVehiculo">Placa <span>*</span></label>
+        <input type="text" id="placaVehiculo" placeholder="Ej: ABC123" aria-describedby="error-placa">
+        <div id="error-placa" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="marcaVehiculo">Marca <span>*</span></label>
+        <input type="text" id="marcaVehiculo" aria-describedby="error-marca">
+        <div id="error-marca" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="modeloVehiculo">Modelo <span>*</span></label>
+        <input type="text" id="modeloVehiculo" aria-describedby="error-modelo">
+        <div id="error-modelo" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="colorVehiculo">Color <span>*</span></label>
+        <input type="text" id="colorVehiculo" aria-describedby="error-color">
+        <div id="error-color" class="error-message" role="alert"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="tipoVehiculo">Tipo <span>*</span></label>
+        <select id="tipoVehiculo" aria-describedby="error-tipo">
+          <option value="">-- Seleccionar --</option>
+          <option value="auto">Auto</option>
+          <option value="moto">Moto</option>
+          <option value="camioneta">Camioneta</option>
+          <option value="otro">Otro</option>
+        </select>
+        <div id="error-tipo" class="error-message" role="alert"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn" type="button" onclick="validarYRegistrar()" style="width:100%; margin-top:20px;">
+    Registrar Nuevo Conductor y Vehículo
+  </button>
+
+  <div id="mensaje-resumen" class="resumen-error" role="alert"></div>
+</div>

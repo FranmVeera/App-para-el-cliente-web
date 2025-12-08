@@ -1,0 +1,20 @@
+<div class="login-box">
+  <div class="logo-login">
+    <img src="assets/logo-uleam-full.png" alt="Universidad Laica Eloy Alfaro de Manabí" class="logo-img-full">
+  </div>
+  <h2>Iniciar Sesión</h2>
+  <form id="loginForm" novalidate>
+    <div class="form-group">
+      <label for="usuario">Usuario / Correo</label>
+      <input type="text" id="usuario" name="usuario" required aria-describedby="error-usuario" />
+      <div id="error-usuario" class="error-message" role="alert"></div>
+    </div>
+    <div class="form-group">
+      <label for="contrasena">Contraseña</label>
+      <input type="password" id="contrasena" name="contrasena" required aria-describedby="error-contrasena" />
+      <div id="error-contrasena" class="error-message" role="alert"></div>
+    </div>
+    <button type="submit">Iniciar Sesión</button>
+    <a href="#" class="forgot-password">¿Olvidó su contraseña?</a>
+  </form>
+</div>

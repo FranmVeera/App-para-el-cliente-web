@@ -1,0 +1,42 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "tipo": "sistema",
+      "nombre": "Administrador",
+      "correo": "admin@uleam.edu.ec",
+      "usuario": "admin",
+      "contrasena": "admin123",
+      "rol": "admin"
+    },
+    {
+      "id": 2,
+      "tipo": "conductor",
+      "cedula": "1309876543",
+      "nombre": "Joel",
+      "apellido": "Barrera",
+      "correo": "joel@uleam.edu.ec",
+      "telefono": "0999876543",
+      "rol": "estudiante"
+    }
+  ],
+  "vehiculos": [
+    {
+      "id": 3,
+      "placa": "ABC123",
+      "marca": "Toyota",
+      "modelo": "Corolla",
+      "color": "Blanco",
+      "tipo": "auto",
+      "usuarioId": 2
+    }
+  ],
+  "movimientos": [
+    {
+      "id": 4,
+      "placa": "ABC123",
+      "tipo": "ingreso",
+      "fecha": "2025-12-07T12:34:56.000Z"
+    }
+  ]
+}
