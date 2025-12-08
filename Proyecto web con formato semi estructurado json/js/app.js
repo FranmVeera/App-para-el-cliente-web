@@ -1,4 +1,3 @@
-// js/app.js
 const INTERFACES_DIR = 'interfaces/';
 const DB_KEY = 'uleamVehicular';
 
@@ -665,4 +664,5 @@ function crearUsuarioSistema() {
   document.getElementById('correoAdmin').value = '';
   document.getElementById('rolAdmin').value = '';
   document.getElementById('contrasenaAdmin').value = '';
+
 }
